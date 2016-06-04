@@ -16,23 +16,23 @@ DWORD WINAPI DLLStart(LPVOID param)
 		0x200000,
 		(BYTE*)("\xA1\x00\x00\x00\x00\x8B\x08\xFF\x51\x44\xA1\x00\x00\x00\x00\xE8\x00\x00\x00\x00\x33\xD2"), "x????xxxxxx????x????xx") + 1);
 
-	MiniGame_3* game = manager->miniGameManagerList->getMiniGame();
+	MiniGame_3* game = manager->miniGame_3;
 
 	//Check if the pointer to MiniGame_1 is correct
 	if (IsBadReadPtr(game, sizeof(MiniGame_3)))
 		return -1;
 
 	//Get the paddles data
-	void* leftChickenPaddleData = game->chickenLeftPaddle->data;
-	void* rightChickenPaddleData = game->chickenRightPaddle->data;
+	DWORD leftChickenPaddleData = (DWORD)game->chickenLeftPaddle->data;
+	DWORD rightChickenPaddleData = (DWORD)game->chickenRightPaddle->data;
 
-	void* leftBatPaddleData = game->batLeftPaddle->data;
-	void* rightBatPaddleData = game->batRightPaddle->data;
+	DWORD leftBatPaddleData = (DWORD)game->batLeftPaddle->data;
+	DWORD rightBatPaddleData = (DWORD)game->batRightPaddle->data;
 
-	void* leftRoosterPaddleData = game->roosterLeftPaddle->data;
-	void* rightRoosterPaddleData = game->roosterRightPaddle->data;
+	DWORD leftRoosterPaddleData = (DWORD)game->roosterLeftPaddle->data;
+	DWORD rightRoosterPaddleData = (DWORD)game->roosterRightPaddle->data;
 
-	int iterateTo = 458 - game->chickenLeftPaddle->hitBox->first;
+	DWORD iterateTo = 458 - game->chickenLeftPaddle->hitBox->first;
 
 	//Find hwnd of NosTale window
 	HWND hwnd = FindWindowA("TNosTaleMainF", "NosTale");
@@ -40,10 +40,12 @@ DWORD WINAPI DLLStart(LPVOID param)
 
 	while (true)
 	{
+		if (game->m_bIsVisible)
+		{
 			game->m_bHasMaxAmmo = true;
-			for (int i = 458; i != iterateTo; i--)
+			for (DWORD i = 458; i != iterateTo; i--)
 			{
-				if (*(BYTE*)((DWORD)leftRoosterPaddleData + (DWORD)i) > 0)
+				if (*(BYTE*)(leftRoosterPaddleData + i) > 0)
 				{
 					PostMessage(hwnd, KEY_DOWN, VK_LEFT, 0);
 					PostMessage(hwnd, KEY_UP, VK_LEFT, 0);
@@ -51,7 +53,7 @@ DWORD WINAPI DLLStart(LPVOID param)
 					break;
 				}
 
-				if (*(BYTE*)((DWORD)leftBatPaddleData + (DWORD)i) > 0)
+				if (*(BYTE*)(leftBatPaddleData + i) > 0)
 				{
 					PostMessage(hwnd, KEY_DOWN, VK_LEFT, 0);
 					PostMessage(hwnd, KEY_UP, VK_LEFT, 0);
@@ -59,7 +61,7 @@ DWORD WINAPI DLLStart(LPVOID param)
 					break;
 				}
 
-				if (*(BYTE*)((DWORD)leftChickenPaddleData + (DWORD)i) > 0)
+				if (*(BYTE*)(leftChickenPaddleData + i) > 0)
 				{
 					PostMessage(hwnd, KEY_DOWN, VK_LEFT, 0);
 					PostMessage(hwnd, KEY_UP, VK_LEFT, 0);
@@ -67,7 +69,7 @@ DWORD WINAPI DLLStart(LPVOID param)
 					break;
 				}
 
-				if (*(BYTE*)((DWORD)rightRoosterPaddleData + (DWORD)i) > 0)
+				if (*(BYTE*)(rightRoosterPaddleData + i) > 0)
 				{
 					PostMessage(hwnd, KEY_DOWN, VK_RIGHT, 0);
 					PostMessage(hwnd, KEY_UP, VK_RIGHT, 0);
@@ -75,7 +77,7 @@ DWORD WINAPI DLLStart(LPVOID param)
 					break;
 				}
 
-				if (*(BYTE*)((DWORD)rightBatPaddleData + (DWORD)i) > 0)
+				if (*(BYTE*)(rightBatPaddleData + i) > 0)
 				{
 					PostMessage(hwnd, KEY_DOWN, VK_RIGHT, 0);
 					PostMessage(hwnd, KEY_UP, VK_RIGHT, 0);
@@ -83,7 +85,7 @@ DWORD WINAPI DLLStart(LPVOID param)
 					break;
 				}
 
-				if (*(BYTE*)((DWORD)rightChickenPaddleData + (DWORD)i) > 0)
+				if (*(BYTE*)(rightChickenPaddleData + i) > 0)
 				{
 					PostMessage(hwnd, KEY_DOWN, VK_RIGHT, 0);
 					PostMessage(hwnd, KEY_UP, VK_RIGHT, 0);
@@ -93,6 +95,7 @@ DWORD WINAPI DLLStart(LPVOID param)
 
 
 			}
+		}
 
 		Sleep(1);
 	}

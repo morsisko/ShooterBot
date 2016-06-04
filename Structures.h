@@ -12,7 +12,9 @@ class HitBox;
 class MiniGame_3
 {
 public:
-	char _0x0000[2220];
+	char _0x0000[24];
+	__int8 m_bIsVisible; //0x0018 
+	char _0x0019[2195];
 	TimingShotGame* chickenRightPaddle; //0x08AC 
 	TimingShotGame* batRightPaddle; //0x08B0 
 	TimingShotGame* roosterRightPaddle; //0x08B4 
@@ -25,7 +27,7 @@ public:
 	char _0x08CC[60];
 	__int8 m_bAmmo; //0x0908 
 	char _0x0909[2];
-	bool m_bHasMaxAmmo; //0x090B 
+	__int8 m_bHasMaxAmmo; //0x090B 
 	char _0x090C[52];
 
 };//Size=0x0940
@@ -50,30 +52,18 @@ public:
 
 };//Size=0x0050
 
-class MiniGameManagerList
-{
-private:
-	void* basePointer; //0x0000
-	MiniGame_3** pointerToArray; //0x0004
-	int currentSize; //0x0008
-	int paddle[2];
-
-public:
-
-	MiniGame_3* getMiniGame()
-	{
-		if (currentSize <= 6)
-			return nullptr;
-		else
-			return pointerToArray[6];
-	}
-
-};//Size=0x0014
 
 class TMiniGameManager
 {
 public:
-	char _0x0000[32];
-	MiniGameManagerList* miniGameManagerList; //0x0020 
+	char _0x0000[104];
+	__int32 m_iCurrentMiniGame; //0x0068 
+	char _0x006C[4];
+	void* miniGame_2; //0x0070 
+	void* miniGame_1; //0x0074 
+	MiniGame_3* miniGame_3; //0x0078 
+	void* miniGame_4; //0x007C 
+	void* miniGame_6; //0x0080 
+	void* miniGame_5; //0x0084 
 
-};//Size=0x0024
+};//Size=0x0088
