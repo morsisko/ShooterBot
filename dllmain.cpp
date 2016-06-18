@@ -23,14 +23,14 @@ DWORD WINAPI DLLStart(LPVOID param)
 		return -1;
 
 	//Get the paddles data
-	DWORD leftChickenPaddleData = (DWORD)game->chickenLeftPaddle->data;
-	DWORD rightChickenPaddleData = (DWORD)game->chickenRightPaddle->data;
+	BYTE* leftChickenPaddleData = game->chickenLeftPaddle->data;
+	BYTE* rightChickenPaddleData = game->chickenRightPaddle->data;
 
-	DWORD leftBatPaddleData = (DWORD)game->batLeftPaddle->data;
-	DWORD rightBatPaddleData = (DWORD)game->batRightPaddle->data;
+	BYTE* leftBatPaddleData = game->batLeftPaddle->data;
+	BYTE* rightBatPaddleData = game->batRightPaddle->data;
 
-	DWORD leftRoosterPaddleData = (DWORD)game->roosterLeftPaddle->data;
-	DWORD rightRoosterPaddleData = (DWORD)game->roosterRightPaddle->data;
+	BYTE* leftRoosterPaddleData = game->roosterLeftPaddle->data;
+	BYTE* rightRoosterPaddleData = game->roosterRightPaddle->data;
 
 	DWORD iterateTo = 458 - game->chickenLeftPaddle->hitBox->first;
 
@@ -45,7 +45,7 @@ DWORD WINAPI DLLStart(LPVOID param)
 			game->m_bHasMaxAmmo = true;
 			for (DWORD i = 458; i != iterateTo; i--)
 			{
-				if (*(BYTE*)(leftRoosterPaddleData + i) > 0)
+				if (leftRoosterPaddleData[i] > 0)
 				{
 					PostMessage(hwnd, KEY_DOWN, VK_LEFT, 0);
 					PostMessage(hwnd, KEY_UP, VK_LEFT, 0);
@@ -53,7 +53,7 @@ DWORD WINAPI DLLStart(LPVOID param)
 					break;
 				}
 
-				if (*(BYTE*)(leftBatPaddleData + i) > 0)
+				if (leftBatPaddleData[i] > 0)
 				{
 					PostMessage(hwnd, KEY_DOWN, VK_LEFT, 0);
 					PostMessage(hwnd, KEY_UP, VK_LEFT, 0);
@@ -61,7 +61,7 @@ DWORD WINAPI DLLStart(LPVOID param)
 					break;
 				}
 
-				if (*(BYTE*)(leftChickenPaddleData + i) > 0)
+				if (leftChickenPaddleData[i] > 0)
 				{
 					PostMessage(hwnd, KEY_DOWN, VK_LEFT, 0);
 					PostMessage(hwnd, KEY_UP, VK_LEFT, 0);
@@ -69,7 +69,7 @@ DWORD WINAPI DLLStart(LPVOID param)
 					break;
 				}
 
-				if (*(BYTE*)(rightRoosterPaddleData + i) > 0)
+				if (rightRoosterPaddleData[i] > 0)
 				{
 					PostMessage(hwnd, KEY_DOWN, VK_RIGHT, 0);
 					PostMessage(hwnd, KEY_UP, VK_RIGHT, 0);
@@ -77,7 +77,7 @@ DWORD WINAPI DLLStart(LPVOID param)
 					break;
 				}
 
-				if (*(BYTE*)(rightBatPaddleData + i) > 0)
+				if (rightBatPaddleData[i] > 0)
 				{
 					PostMessage(hwnd, KEY_DOWN, VK_RIGHT, 0);
 					PostMessage(hwnd, KEY_UP, VK_RIGHT, 0);
@@ -85,7 +85,7 @@ DWORD WINAPI DLLStart(LPVOID param)
 					break;
 				}
 
-				if (*(BYTE*)(rightChickenPaddleData + i) > 0)
+				if (rightChickenPaddleData[i] > 0)
 				{
 					PostMessage(hwnd, KEY_DOWN, VK_RIGHT, 0);
 					PostMessage(hwnd, KEY_UP, VK_RIGHT, 0);
