@@ -56,7 +56,9 @@ public:
 class TMiniGameManager
 {
 public:
-	char _0x0000[104];
+	char _0x0000[12];
+	void* currentMiniGame; //0x000C 
+	char _0x0010[88];
 	__int32 m_iCurrentMiniGame; //0x0068 
 	char _0x006C[4];
 	void* miniGame_2; //0x0070 
